@@ -1,6 +1,6 @@
 import React from 'react';
 import { StockProject } from '../types';
-import { Calendar, Image as ImageIcon, Trash2, ExternalLink } from 'lucide-react';
+import { Calendar, Image as ImageIcon, Trash2, ArrowUpRight, Clock, FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface ProjectCardProps {
@@ -12,40 +12,52 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpen, onDelete }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group flex flex-col justify-between"
+      whileHover={{ y: -8 }}
+      className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/40 dark:shadow-none transition-all group flex flex-col justify-between h-full relative overflow-hidden"
     >
-      <div>
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="font-bold text-gray-900 truncate pr-4">{project.name}</h3>
+      <div className="absolute top-0 right-0 p-12 bg-emerald-500/5 rounded-full blur-3xl -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      
+      <div className="relative z-10">
+        <div className="flex justify-between items-start mb-6">
+          <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-emerald-600 shadow-Inner border border-gray-100 dark:border-gray-700">
+             <FileText size={24} />
+          </div>
           <button 
-            onClick={() => onDelete(project.id)}
-            className="text-gray-300 hover:text-rose-500 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(project.id);
+            }}
+            className="p-3 text-gray-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-2xl transition-all"
           >
-            <Trash2 size={16} />
+            <Trash2 size={18} />
           </button>
         </div>
         
-        <div className="space-y-2 text-sm text-gray-500">
-          <div className="flex items-center gap-2">
-            <ImageIcon size={14} />
-            <span>{project.images.length} images</span>
+        <h3 className="text-xl font-black text-gray-900 dark:text-white truncate pr-2 tracking-tight group-hover:text-emerald-600 transition-colors">{project.name}</h3>
+        
+        <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex items-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-100 dark:border-gray-700">
+            <ImageIcon size={12} className="text-emerald-500" />
+            <span>{project.images.length} ASSETS</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar size={14} />
+          <div className="flex items-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-100 dark:border-gray-700">
+            <Clock size={12} className="text-emerald-500" />
             <span>{new Date(project.updatedAt).toLocaleDateString()}</span>
           </div>
         </div>
       </div>
 
-      <button
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         onClick={() => onOpen(project)}
-        className="mt-4 w-full py-2 bg-emerald-50 text-emerald-700 font-bold rounded-xl hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2"
+        className="relative z-10 mt-8 w-full py-4 bg-gray-900 dark:bg-emerald-600 text-white text-xs font-black rounded-2xl hover:bg-emerald-600 dark:hover:bg-emerald-700 transition-all flex items-center justify-center gap-3 shadow-lg uppercase tracking-widest"
       >
-        Open Project
-        <ExternalLink size={14} />
-      </button>
+        OPEN WORKSPACE
+        <ArrowUpRight size={16} />
+      </motion.button>
     </motion.div>
   );
 };
