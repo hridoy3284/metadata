@@ -1,0 +1,5 @@
+{
+  "name": "Stock Metadata CSV Generator",
+  "description": "Generate SEO-optimized titles, descriptions, and keywords for stock images using AI and export to Adobe Stock, Shutterstock, Freepik, and Vecteezy formats.",
+  "requestFramePermissions": []
+}
